@@ -53,6 +53,13 @@ class LocalDataSource(
     /**
      * Provides flat details stored locally for a given ID in a format of a flow
      */
-    fun getFlatDetailsByIdAsFlow(id: Long): Flow<LocalFlatDetails?> = flatDetailsDao.getFlatDetailsByIdAsFlow(id)
+    fun getFlatDetailsByIdAsFlow(id: Long): Flow<LocalFlatDetails> = flatDetailsDao.getFlatDetailsByIdAsFlow(id)
+
+    /**
+     * Inserts or updates the flat details
+     */
+    suspend fun updateFlatDetails(flatDetails: LocalFlatDetails) = withContext(ioDispatcher) {
+        flatDetailsDao.upsertFlatDetails(flatDetails)
+    }
 
 }

@@ -1,4 +1,14 @@
 package com.kalachev.aviv.layer.domain.model
 
-class FlatDetails {
-}
+import java.math.BigDecimal
+
+data class FlatDetails(
+    val id: Long,
+    val city: String,
+    val area: Double,
+    val imageUrl: String?,
+    val price: BigDecimal?,
+    val professional: String?,
+    val offerType: Int,
+    val propertyType: String?,
+)

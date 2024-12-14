@@ -4,6 +4,7 @@ import android.app.Application
 import com.kalachev.aviv.di.coilModule
 import com.kalachev.aviv.di.dataSourceModule
 import com.kalachev.aviv.di.databaseModule
+import com.kalachev.aviv.di.mappingsModule
 import com.kalachev.aviv.di.networkModule
 import com.kalachev.aviv.di.repositoryModule
 import com.kalachev.aviv.di.useCaseModule
@@ -25,6 +26,7 @@ class App : Application() {
                     coilModule,
                     databaseModule,
                     dataSourceModule,
+                    mappingsModule,
                     networkModule,
                     repositoryModule,
                     useCaseModule,
