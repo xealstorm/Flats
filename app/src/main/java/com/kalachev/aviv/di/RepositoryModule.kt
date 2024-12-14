@@ -9,17 +9,17 @@ import org.koin.dsl.module
 val repositoryModule = module {
     factory<FlatRepository> {
         FlatRepositoryImpl(
-            get(),
-            get(),
-            get()
+            remoteDataSource = get(),
+            localDataSource = get(),
+            flatMappings = get()
         )
     }
 
     factory<FlatDetailsRepository> {
         FlatDetailsRepositoryImpl(
-            get(),
-            get(),
-            get()
+            remoteDataSource = get(),
+            localDataSource = get(),
+            flatDetailsMappings = get()
         )
     }
 }
