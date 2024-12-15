@@ -1,4 +1,4 @@
-package com.kalachev.aviv.layer.domain.model.mappings
+package com.kalachev.aviv.layer.domain.model.mapping
 
 import com.kalachev.aviv.layer.data.local.model.LocalFlatDetails
 import com.kalachev.aviv.layer.data.remote.model.RemoteFlatDetails

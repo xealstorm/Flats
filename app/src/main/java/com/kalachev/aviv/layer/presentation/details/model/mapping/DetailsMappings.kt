@@ -1,4 +1,4 @@
-package com.kalachev.aviv.layer.presentation.details.model.mappings
+package com.kalachev.aviv.layer.presentation.details.model.mapping
 
 import com.kalachev.aviv.layer.domain.model.FlatDetails
 import com.kalachev.aviv.layer.presentation.details.model.DetailsModel

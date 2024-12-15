@@ -1,4 +1,4 @@
-package com.kalachev.aviv.layer.presentation.feed.model.mappings
+package com.kalachev.aviv.layer.presentation.feed.model.mapping
 
 import com.kalachev.aviv.layer.domain.model.Flat
 import com.kalachev.aviv.layer.presentation.feed.model.FeedItemModel

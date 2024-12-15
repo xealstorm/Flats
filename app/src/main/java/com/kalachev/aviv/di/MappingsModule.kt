@@ -1,9 +1,9 @@
 package com.kalachev.aviv.di
 
-import com.kalachev.aviv.layer.domain.model.mappings.FlatDetailsMappings
-import com.kalachev.aviv.layer.domain.model.mappings.FlatMappings
-import com.kalachev.aviv.layer.presentation.details.model.mappings.DetailsMappings
-import com.kalachev.aviv.layer.presentation.feed.model.mappings.FeedItemMappings
+import com.kalachev.aviv.layer.domain.model.mapping.FlatDetailsMappings
+import com.kalachev.aviv.layer.domain.model.mapping.FlatMappings
+import com.kalachev.aviv.layer.presentation.details.model.mapping.DetailsMappings
+import com.kalachev.aviv.layer.presentation.feed.model.mapping.FeedItemMappings
 import org.koin.dsl.module
 
 val mappingsModule = module {

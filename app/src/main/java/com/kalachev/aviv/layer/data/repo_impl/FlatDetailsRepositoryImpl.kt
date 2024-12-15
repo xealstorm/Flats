@@ -3,7 +3,7 @@ package com.kalachev.aviv.layer.data.repo_impl
 import com.kalachev.aviv.layer.data.local.LocalDataSource
 import com.kalachev.aviv.layer.data.remote.RemoteDataSource
 import com.kalachev.aviv.layer.domain.model.FlatDetails
-import com.kalachev.aviv.layer.domain.model.mappings.FlatDetailsMappings
+import com.kalachev.aviv.layer.domain.model.mapping.FlatDetailsMappings
 import com.kalachev.aviv.layer.domain.repo.FlatDetailsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

@@ -8,7 +8,7 @@ import com.kalachev.aviv.layer.domain.usecase.SyncFlatDetails
 import com.kalachev.aviv.layer.presentation.details.model.DetailsEvent
 import com.kalachev.aviv.layer.presentation.details.model.DetailsModel
 import com.kalachev.aviv.layer.presentation.details.model.DetailsViewState
-import com.kalachev.aviv.layer.presentation.details.model.mappings.DetailsMappings
+import com.kalachev.aviv.layer.presentation.details.model.mapping.DetailsMappings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
