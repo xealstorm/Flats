@@ -1,4 +1,7 @@
 package com.kalachev.aviv.layer.presentation.feed.model
 
-class FeedViewState {
-}
+data class FeedViewState(
+    val items: List<FeedItemModel> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: Throwable? = null
+)

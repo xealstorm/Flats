@@ -1,4 +1,7 @@
 package com.kalachev.aviv.layer.presentation.feed.model
 
-class FeedEvent {
+sealed interface FeedEvent {
+    data object ScreenOpened : FeedEvent
+    data object PullToRefresh : FeedEvent
+    data class ItemTapped(val clientId: Long) : FeedEvent
 }

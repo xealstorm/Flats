@@ -1,4 +1,8 @@
 package com.kalachev.aviv.layer.presentation.feed.model
 
-class FeedItemModel {
-}
+data class FeedItemModel(
+    val id: Long,
+    val thumbUrl: String?,
+    val price: String,
+    val city: String,
+)
