@@ -1,5 +1,9 @@
 package com.kalachev.aviv.layer.presentation.details.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class DetailsModel(
     val id: Long,
     val city: String,
@@ -9,4 +13,4 @@ data class DetailsModel(
     val professional: String,
     val offerType: Int,
     val propertyType: String,
-)
+): Parcelable

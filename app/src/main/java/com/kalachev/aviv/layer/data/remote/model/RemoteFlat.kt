@@ -1,18 +1,18 @@
 package com.kalachev.aviv.layer.data.remote.model
 
-import kotlinx.serialization.Contextual
+import com.kalachev.aviv.layer.data.remote.model.serializer.BigDecimalSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 @Serializable
 data class RemoteFlat(
-    val id: Long?,
-    val city: String?,
-    val area: Double?,
-    val url: String?,
-    @Contextual
-    val price: BigDecimal?,
-    val professional: String?,
-    val offerType: Int?,
-    val propertyType: String?,
+    val id: Long? = null,
+    val city: String? = null,
+    val area: Double? = null,
+    val url: String? = null,
+    @Serializable(with = BigDecimalSerializer::class)
+    val price: BigDecimal? = null,
+    val professional: String? = null,
+    val offerType: Int? = null,
+    val propertyType: String? = null,
 )
