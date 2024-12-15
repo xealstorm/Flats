@@ -1,5 +1,6 @@
 package com.kalachev.aviv.layer.data.repo_impl
 
+import android.os.RemoteException
 import com.kalachev.aviv.layer.data.local.LocalDataSource
 import com.kalachev.aviv.layer.data.remote.RemoteDataSource
 import com.kalachev.aviv.layer.domain.model.FlatDetails
@@ -31,7 +32,7 @@ class FlatDetailsRepositoryImpl(
             }
             Result.success(Unit)
         } else {
-            Result.failure(freshFlatDetailsResult.exceptionOrNull() ?: Exception("Failed to fetch assets"))
+            Result.failure(freshFlatDetailsResult.exceptionOrNull() ?: RemoteException("Failed to fetch assets"))
         }
     }
 
@@ -45,7 +46,7 @@ class FlatDetailsRepositoryImpl(
             Result.success(result.getOrNull()?.let(flatDetailsMappings.remoteToDomain()))
         } else {
             Result.failure(
-                result.exceptionOrNull() ?: Exception("Failed to fetch flat details")
+                result.exceptionOrNull() ?: RemoteException("Failed to fetch flat details")
             )
         }
     }
