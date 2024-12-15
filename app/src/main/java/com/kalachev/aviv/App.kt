@@ -1,7 +1,6 @@
 package com.kalachev.aviv
 
 import android.app.Application
-import com.kalachev.aviv.di.coilModule
 import com.kalachev.aviv.di.dataSourceModule
 import com.kalachev.aviv.di.databaseModule
 import com.kalachev.aviv.di.mappingsModule
@@ -23,7 +22,6 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
-                    coilModule,
                     databaseModule,
                     dataSourceModule,
                     mappingsModule,
