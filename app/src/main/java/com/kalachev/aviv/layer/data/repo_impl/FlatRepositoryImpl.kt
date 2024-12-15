@@ -1,5 +1,6 @@
 package com.kalachev.aviv.layer.data.repo_impl
 
+import android.os.RemoteException
 import com.kalachev.aviv.layer.data.local.LocalDataSource
 import com.kalachev.aviv.layer.data.remote.RemoteDataSource
 import com.kalachev.aviv.layer.domain.model.Flat
@@ -31,7 +32,7 @@ class FlatRepositoryImpl(
             )
             Result.success(Unit)
         } else {
-            Result.failure(freshFlatsResult.exceptionOrNull() ?: Exception("Failed to fetch flats"))
+            Result.failure(freshFlatsResult.exceptionOrNull() ?: RemoteException("Failed to fetch flats"))
         }
     }
 
@@ -49,16 +50,25 @@ class FlatRepositoryImpl(
     private suspend fun provideFlatsFromRemote(): Result<List<Flat>> = withContext(ioDispatcher) {
         val result = remoteDataSource.getAllFlats()
         if (result.isSuccess) {
-            Result.success(
-                result.getOrNull()
-                    ?.filterNotNull()
-                    ?.mapNotNull {
-                        it.let(flatMappings.remoteToDomain())
-                    }
-                    ?: listOf())
+            val flatsResponse = result.getOrNull()
+            val isResultValid = flatsResponse != null
+                && !flatsResponse.items.isNullOrEmpty()
+                && flatsResponse.items.filterNotNull().size == flatsResponse.totalCount
+            if (isResultValid) {
+                Result.success(
+                    flatsResponse
+                        ?.items
+                        ?.filterNotNull()
+                        ?.mapNotNull {
+                            it.let(flatMappings.remoteToDomain())
+                        }
+                        ?: listOf())
+            } else {
+                Result.failure(IllegalArgumentException("Incorrect format"))
+            }
         } else {
             Result.failure(
-                result.exceptionOrNull() ?: Exception("Failed to fetch assets")
+                result.exceptionOrNull() ?: RemoteException("Failed to fetch assets")
             )
         }
     }

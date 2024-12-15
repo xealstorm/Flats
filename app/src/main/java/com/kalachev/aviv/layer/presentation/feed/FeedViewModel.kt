@@ -33,10 +33,6 @@ class FeedViewModel(
     private val _feedUiAction = MutableSharedFlow<FeedUiAction>()
     val feedUiAction = _feedUiAction.asSharedFlow()
 
-    init {
-        handleEvent(FeedEvent.ScreenOpened)
-    }
-
     fun handleEvent(event: FeedEvent) {
         when (event) {
             FeedEvent.ScreenOpened -> {

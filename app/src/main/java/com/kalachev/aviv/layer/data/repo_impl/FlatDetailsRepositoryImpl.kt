@@ -18,8 +18,8 @@ class FlatDetailsRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FlatDetailsRepository {
 
-    override fun getFlatDetailsByIdAsFlow(id: Long): Flow<FlatDetails> =
-        localDataSource.getFlatDetailsByIdAsFlow(id).map { it.let(flatDetailsMappings.localToDomain()) }
+    override fun getFlatDetailsByIdAsFlow(id: Long): Flow<FlatDetails?> =
+        localDataSource.getFlatDetailsByIdAsFlow(id).map { it?.let(flatDetailsMappings.localToDomain()) }
 
     override suspend fun syncFlatDetailsById(id: Long): Result<Unit> = withContext(ioDispatcher) {
         val freshFlatDetailsResult = provideFlatDetailsByIdFromRemote(id)

@@ -44,7 +44,11 @@ class DetailsViewModel(
             }
             .collect { result ->
                 result.onSuccess { detailsDomain ->
-                    updateStateAsSuccess(detailsDomain.let(detailsMappings.toPresentation()))
+                    if (detailsDomain != null) {
+                        updateStateAsSuccess(detailsDomain.let(detailsMappings.toPresentation()))
+                    } else {
+                        updateStateAsError(IllegalArgumentException("The details could not be requested"))
+                    }
                 }.onFailure { error ->
                     updateStateAsError(error)
                 }

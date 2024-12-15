@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -17,13 +18,12 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
         buildConfigField "String", "SERVER_ENDPOINT", "\"https://gsl-apps-technical-test.dignp.com\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        room {
+            schemaDirectory("$projectDir/schemas")
+        }
     }
 
     buildTypes {

@@ -7,5 +7,5 @@ interface FlatDetailsRepository {
 
     suspend fun syncFlatDetailsById(id: Long): Result<Unit>
 
-    fun getFlatDetailsByIdAsFlow(id: Long): Flow<FlatDetails>
+    fun getFlatDetailsByIdAsFlow(id: Long): Flow<FlatDetails?>
 }

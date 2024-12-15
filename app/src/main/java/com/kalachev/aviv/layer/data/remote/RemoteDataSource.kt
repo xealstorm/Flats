@@ -1,8 +1,8 @@
 package com.kalachev.aviv.layer.data.remote
 
 import android.annotation.SuppressLint
-import com.kalachev.aviv.layer.data.remote.model.RemoteFlat
 import com.kalachev.aviv.layer.data.remote.model.RemoteFlatDetails
+import com.kalachev.aviv.layer.data.remote.model.RemoteFlatsResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -16,13 +16,13 @@ class RemoteDataSource(private val client: HttpClient) {
     /**
      * Performs a network call to request a list of all the flats.
      */
-    suspend fun getAllFlats(): Result<List<RemoteFlat?>?> =
+    suspend fun getAllFlats(): Result<RemoteFlatsResponse?> =
         try {
             val response: HttpResponse = client.get(GET_FLATS_URL)
             if (response.status == HttpStatusCode.OK) {
-                Result.success(response.body<List<RemoteFlat?>?>())
+                Result.success(response.body<RemoteFlatsResponse?>())
             } else {
-                Result.failure(Exception(DEFAULT_ERROR_TEXT))
+                Result.failure(IllegalArgumentException(DEFAULT_ERROR_TEXT))
             }
         } catch (e: ClientRequestException) {
             Result.failure(e)
@@ -42,7 +42,7 @@ class RemoteDataSource(private val client: HttpClient) {
             if (response.status == HttpStatusCode.OK) {
                 Result.success(response.body<RemoteFlatDetails?>())
             } else {
-                Result.failure(Exception(DEFAULT_ERROR_TEXT))
+                Result.failure(IllegalArgumentException(DEFAULT_ERROR_TEXT))
             }
         } catch (e: ClientRequestException) {
             Result.failure(e)

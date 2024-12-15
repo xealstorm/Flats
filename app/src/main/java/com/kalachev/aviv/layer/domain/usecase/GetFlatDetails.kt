@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 class GetFlatDetails(
     private val flatDetailsRepository: FlatDetailsRepository,
 ) {
-    operator fun invoke(id: Long): Flow<Result<FlatDetails>> = flatDetailsRepository.getFlatDetailsByIdAsFlow(id)
+    operator fun invoke(id: Long): Flow<Result<FlatDetails?>> = flatDetailsRepository.getFlatDetailsByIdAsFlow(id)
         .map { flatDetails ->
             Result.success(flatDetails)
         }

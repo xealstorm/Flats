@@ -20,6 +20,6 @@ interface FlatDetailsDao {
     suspend fun getFlatDetailsById(id: Long): LocalFlatDetails?
 
     @Query("SELECT * FROM flatdetails WHERE id = :id")
-    fun getFlatDetailsByIdAsFlow(id: Long): Flow<LocalFlatDetails>
+    fun getFlatDetailsByIdAsFlow(id: Long): Flow<LocalFlatDetails?>
 
 }
