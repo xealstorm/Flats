@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.kalachev.aviv.layer.data.local.model.LocalFlat
+import com.kalachev.aviv.layer.data.local.model.LocalFlatIdPair
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -27,6 +28,9 @@ interface FlatDao {
 
     @Query("SELECT * FROM flats")
     fun getAllFlatsAsFlow(): Flow<List<LocalFlat>>
+
+    @Query("SELECT localId, id FROM flats")
+    fun getLocalFlatIdPairs(): List<LocalFlatIdPair>
 
 
 }

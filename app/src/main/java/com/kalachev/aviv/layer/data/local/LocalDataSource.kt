@@ -37,8 +37,10 @@ class LocalDataSource(
     ) = withContext(ioDispatcher) {
         val flatDetailsIdsToDelete = flatsToUpdate.map { it.id } + flatsToDelete.map { it.id }
         appDatabase.runInTransaction {
+            val localIdToIdPairs = flatDao.getLocalFlatIdPairs()
             flatDao.insertFlats(flatsToAdd)
-            flatDao.updateFlats(flatsToUpdate)
+            // prepopulate the updated flats with the local IDs so the update operation can be performed
+            flatDao.updateFlats(flatsToUpdate.map { it.copy(localId = localIdToIdPairs.first { pair -> pair.id == it.id }.localId) })
             flatDao.deleteFlats(flatsToDelete)
             flatDetailsDao.deleteFlatDetailsByIds(flatDetailsIdsToDelete)
         }

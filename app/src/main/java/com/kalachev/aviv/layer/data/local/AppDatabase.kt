@@ -9,7 +9,7 @@ import com.kalachev.aviv.layer.data.local.model.LocalFlat
 import com.kalachev.aviv.layer.data.local.model.LocalFlatDetails
 import com.kalachev.aviv.layer.data.local.model.converters.BigDecimalConverter
 
-@Database(entities = [LocalFlat::class, LocalFlatDetails::class], version = 1)
+@Database(entities = [LocalFlat::class, LocalFlatDetails::class], version = 2)
 @TypeConverters(BigDecimalConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun flatDao(): FlatDao

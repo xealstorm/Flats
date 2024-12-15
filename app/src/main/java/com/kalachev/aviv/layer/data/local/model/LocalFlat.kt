@@ -1,10 +1,14 @@
 package com.kalachev.aviv.layer.data.local.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.math.BigDecimal
 
-@Entity(tableName = "flats")
+@Entity(
+    tableName = "flats",
+    indices = [Index(value = ["id"], unique = true)]
+)
 data class LocalFlat(
     @PrimaryKey(autoGenerate = true)
     val localId: Long = 0,

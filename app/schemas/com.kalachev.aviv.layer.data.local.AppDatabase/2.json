@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "dc60af9912052aab32799c23759e8a2a",
+    "version": 2,
+    "identityHash": "295cae7b0fe5e53d25e0bc4200439f11",
     "entities": [
       {
         "tableName": "flats",
@@ -147,14 +147,24 @@
             "localId"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_flatdetails_id",
+            "unique": true,
+            "columnNames": [
+              "id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_flatdetails_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dc60af9912052aab32799c23759e8a2a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '295cae7b0fe5e53d25e0bc4200439f11')"
     ]
   }
 }
