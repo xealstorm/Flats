@@ -20,14 +20,17 @@ fun AppNavGraph(
         navController = navHostController,
         startDestination = "feedScreen"
     ) {
-        composable("feedScreen") {
+        composable(route = "feedScreen") {
             FeedScreen(
                 modifier = modifier,
                 navController = navHostController,
             )
         }
 
-        composable("detailsScreen/{detailsId}", arguments = listOf(navArgument("detailsId") { type = NavType.LongType })) { backStackEntry ->
+        composable(
+            route = "detailsScreen/{detailsId}",
+            arguments = listOf(navArgument("detailsId") { type = NavType.LongType })
+        ) { backStackEntry ->
             val detailsId = backStackEntry.arguments?.getLong("detailsId")
             DetailsScreen(
                 modifier = modifier,
