@@ -9,6 +9,8 @@ class FlatDetailsMappings {
         LocalFlatDetails(
             localId = 0,
             id = it.id,
+            bedrooms = it.bedrooms,
+            rooms = it.rooms,
             city = it.city,
             area = it.area,
             imageUrl = it.imageUrl,
@@ -23,6 +25,8 @@ class FlatDetailsMappings {
     fun localToDomain(): (LocalFlatDetails) -> FlatDetails = {
         FlatDetails(
             id = it.id,
+            bedrooms = it.bedrooms,
+            rooms = it.rooms,
             city = it.city,
             area = it.area,
             imageUrl = it.imageUrl,
@@ -41,6 +45,8 @@ class FlatDetailsMappings {
         ) {
             FlatDetails(
                 id = it.id,
+                bedrooms = it.bedrooms ?: 0,
+                rooms = it.rooms ?: 0,
                 city = it.city,
                 area = it.area,
                 imageUrl = it.url,

@@ -7,6 +7,8 @@ import java.math.BigDecimal
 @Serializable
 data class RemoteFlat(
     val id: Long? = null,
+    val bedrooms: Int? = null,
+    val rooms: Int? = null,
     val city: String? = null,
     val area: Double? = null,
     val url: String? = null,

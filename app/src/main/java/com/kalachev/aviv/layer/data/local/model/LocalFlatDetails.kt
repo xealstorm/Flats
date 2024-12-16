@@ -13,6 +13,8 @@ data class LocalFlatDetails(
     @PrimaryKey(autoGenerate = true)
     val localId: Long = 0,
     val id: Long,
+    val bedrooms: Int = 0,
+    val rooms: Int = 0,
     val city: String,
     val area: Double,
     val imageUrl: String?,

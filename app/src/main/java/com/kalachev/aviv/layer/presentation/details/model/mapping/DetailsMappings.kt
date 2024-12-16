@@ -7,6 +7,8 @@ class DetailsMappings {
     fun toPresentation(): (FlatDetails) -> DetailsModel = {
         DetailsModel(
             id = it.id,
+            bedrooms = it.bedrooms,
+            rooms = it.rooms,
             city = it.city,
             area = it.area,
             imageUrl = it.imageUrl,

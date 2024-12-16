@@ -4,6 +4,8 @@ import java.math.BigDecimal
 
 data class Flat(
     val id: Long,
+    val bedrooms: Int,
+    val rooms: Int,
     val city: String,
     val area: Double,
     val imageUrl: String?,
