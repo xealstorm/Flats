@@ -1,6 +1,7 @@
 package com.kalachev.aviv.layer.presentation.feed
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,20 +15,28 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.kalachev.aviv.R
+import com.kalachev.aviv.layer.presentation.feed.model.FeedErrorCode
 import com.kalachev.aviv.layer.presentation.feed.model.FeedEvent
 import com.kalachev.aviv.layer.presentation.feed.model.FeedItemModel
 import com.kalachev.aviv.layer.presentation.feed.model.FeedUiAction
@@ -43,6 +52,18 @@ fun FeedScreen(
     viewModel: FeedViewModel = koinViewModel()
 ) {
     val feedState by viewModel.feedViewState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val actionLabel = stringResource(R.string.cta_retry)
+    val message = feedState.error?.let { feedErrorCode ->
+        stringResource(
+            when (feedErrorCode) {
+                FeedErrorCode.REMOTE_EXCEPTION -> R.string.error_code_remote
+                FeedErrorCode.LOCAL_EXCEPTION -> R.string.error_code_local
+                FeedErrorCode.UNKNOWN_EXCEPTION -> R.string.error_code_unknown
+            }
+        )
+
+    }
 
     LaunchedEffect(Unit) {
         viewModel.handleEvent(FeedEvent.ScreenOpened)
@@ -54,13 +75,29 @@ fun FeedScreen(
         }
     }
 
-    FeedContent(
-        modifier = modifier,
-        feedItems = feedState.items,
-        isLoading = feedState.isLoading,
-        errorText = feedState.error?.message
-    ) { feedEvent ->
-        viewModel.handleEvent(feedEvent)
+    LaunchedEffect(feedState.error) {
+        if (feedState.error != null && message != null) {
+            val snackbarResult = snackbarHostState.showSnackbar(
+                message = message,
+                actionLabel = actionLabel,
+                duration = SnackbarDuration.Indefinite
+            )
+            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                viewModel.handleEvent(FeedEvent.PullToRefresh)
+            }
+        }
+    }
+    Box(modifier = modifier.fillMaxSize()) {
+        FeedContent(
+            feedItems = feedState.items,
+            isLoading = feedState.isLoading,
+        ) { feedEvent ->
+            viewModel.handleEvent(feedEvent)
+        }
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
@@ -70,10 +107,9 @@ fun FeedContent(
     modifier: Modifier = Modifier,
     feedItems: List<FeedItemModel>,
     isLoading: Boolean,
-    errorText: String?,
     handleEvent: (FeedEvent) -> Unit
 ) {
-    PullToRefreshBox (
+    PullToRefreshBox(
         isRefreshing = isLoading,
         onRefresh = { handleEvent(FeedEvent.PullToRefresh) },
         modifier = modifier
@@ -177,7 +213,6 @@ fun FeedContentPreview() {
     FeedContent(
         feedItems = sampleFeedItems,
         isLoading = false,
-        errorText = null,
         handleEvent = { _ -> }
     )
 }

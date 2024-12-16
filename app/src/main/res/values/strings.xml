@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">aviv</string>
+    <string name="error_code_remote">Network error</string>
+    <string name="error_code_local">App error</string>
+    <string name="error_code_unknown">Unknown error</string>
+    <string name="cta_retry">Retry</string>
 </resources>

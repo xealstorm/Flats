@@ -33,9 +33,14 @@ class DetailsViewModel(
     fun handleEvent(event: DetailsEvent) {
         when (event) {
             is DetailsEvent.ScreenOpened -> {
-                observeDetails(event.id)
-                refreshDetails(event.id)
+                initStateWithId(event.id)
+                _detailsState.value.id?.let {
+                    observeDetails(it)
+                    refreshDetails(it)
+                }
             }
+
+            is DetailsEvent.Refresh -> _detailsState.value.id?.let { refreshDetails(it) }
         }
     }
 
@@ -98,6 +103,10 @@ class DetailsViewModel(
                 error = null
             )
         }
+    }
+
+    private fun initStateWithId(id: Long) {
+        _detailsState.update { it.copy(id = id) }
     }
 
     override fun onCleared() {
