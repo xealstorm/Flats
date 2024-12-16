@@ -13,6 +13,7 @@ val viewModelModule = module {
             syncFlats = get(),
             savedStateHandle = handle,
             feedItemMappings = get(),
+            feedErrorCodeMappings = get(),
         )
     }
 
@@ -22,6 +23,7 @@ val viewModelModule = module {
             syncFlatDetails = get(),
             savedStateHandle = handle,
             detailsMappings = get(),
+            detailsErrorCodeMappings = get(),
         )
     }
 }

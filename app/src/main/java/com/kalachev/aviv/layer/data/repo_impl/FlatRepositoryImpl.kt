@@ -32,7 +32,7 @@ class FlatRepositoryImpl(
             )
             Result.success(Unit)
         } else {
-            Result.failure(freshFlatsResult.exceptionOrNull() ?: RemoteException("Failed to fetch flats"))
+            Result.failure(freshFlatsResult.exceptionOrNull() ?: RemoteException(DEFAULT_REMOTE_ERROR_TEXT))
         }
     }
 
@@ -64,11 +64,11 @@ class FlatRepositoryImpl(
                         }
                         ?: listOf())
             } else {
-                Result.failure(IllegalArgumentException("Incorrect format"))
+                Result.failure(IllegalArgumentException(DEFAULT_ILLEGAL_ARGUMENT_TEXT))
             }
         } else {
             Result.failure(
-                result.exceptionOrNull() ?: RemoteException("Failed to fetch assets")
+                result.exceptionOrNull() ?: RemoteException(DEFAULT_REMOTE_ERROR_TEXT)
             )
         }
     }
@@ -91,9 +91,14 @@ class FlatRepositoryImpl(
             fresh.none { it.id == existingItem.id }
         }
 
-        val (toModify, toAdd) = toAddOrUpdate.partition { asset ->
-            existing.any { it.id == asset.id }
+        val (toModify, toAdd) = toAddOrUpdate.partition { item ->
+            existing.any { it.id == item.id }
         }
         return Triple(toAdd, toModify, toRemove)
+    }
+
+    companion object {
+        const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flats"
+        const val DEFAULT_ILLEGAL_ARGUMENT_TEXT = "Incorrect format"
     }
 }

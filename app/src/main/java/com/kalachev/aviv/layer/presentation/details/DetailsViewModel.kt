@@ -8,6 +8,7 @@ import com.kalachev.aviv.layer.domain.usecase.SyncFlatDetails
 import com.kalachev.aviv.layer.presentation.details.model.DetailsEvent
 import com.kalachev.aviv.layer.presentation.details.model.DetailsModel
 import com.kalachev.aviv.layer.presentation.details.model.DetailsViewState
+import com.kalachev.aviv.layer.presentation.details.model.mapping.DetailsErrorCodeMappings
 import com.kalachev.aviv.layer.presentation.details.model.mapping.DetailsMappings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,7 @@ class DetailsViewModel(
     private val syncFlatDetails: SyncFlatDetails,
     private val savedStateHandle: SavedStateHandle,
     private val detailsMappings: DetailsMappings,
+    private val detailsErrorCodeMappings: DetailsErrorCodeMappings,
 ) : ViewModel() {
 
     private val _detailsState = MutableStateFlow(
@@ -44,11 +46,7 @@ class DetailsViewModel(
             }
             .collect { result ->
                 result.onSuccess { detailsDomain ->
-                    if (detailsDomain != null) {
-                        updateStateAsSuccess(detailsDomain.let(detailsMappings.toPresentation()))
-                    } else {
-                        updateStateAsError(IllegalArgumentException("The details could not be requested"))
-                    }
+                    detailsDomain?.let { updateStateAsSuccess(it.let(detailsMappings.toPresentation())) }
                 }.onFailure { error ->
                     updateStateAsError(error)
                 }
@@ -87,7 +85,7 @@ class DetailsViewModel(
         _detailsState.update {
             it.copy(
                 isLoading = false,
-                error = error
+                error = error.let(detailsErrorCodeMappings.toPresentation())
             )
         }
     }

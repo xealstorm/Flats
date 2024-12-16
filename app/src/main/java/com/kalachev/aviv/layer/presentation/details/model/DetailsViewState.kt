@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DetailsViewState(
+    val id: Long? = null,
     val details: DetailsModel? = null,
     val isLoading: Boolean = false,
-    val error: Throwable? = null
-): Parcelable
+    val error: DetailsErrorCode? = null
+) : Parcelable

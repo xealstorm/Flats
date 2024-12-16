@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class FeedViewState(
     val items: List<FeedItemModel> = emptyList(),
     val isLoading: Boolean = false,
-    val error: Throwable? = null
+    val error: FeedErrorCode? = null
 ): Parcelable

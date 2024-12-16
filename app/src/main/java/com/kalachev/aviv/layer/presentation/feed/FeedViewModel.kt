@@ -9,6 +9,7 @@ import com.kalachev.aviv.layer.presentation.feed.model.FeedEvent
 import com.kalachev.aviv.layer.presentation.feed.model.FeedItemModel
 import com.kalachev.aviv.layer.presentation.feed.model.FeedUiAction
 import com.kalachev.aviv.layer.presentation.feed.model.FeedViewState
+import com.kalachev.aviv.layer.presentation.feed.model.mapping.FeedErrorCodeMappings
 import com.kalachev.aviv.layer.presentation.feed.model.mapping.FeedItemMappings
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ class FeedViewModel(
     private val syncFlats: SyncFlats,
     private val savedStateHandle: SavedStateHandle,
     private val feedItemMappings: FeedItemMappings,
+    private val feedErrorCodeMappings: FeedErrorCodeMappings,
 ) : ViewModel() {
 
     private val _feedViewState: MutableStateFlow<FeedViewState> = MutableStateFlow(
@@ -105,7 +107,7 @@ class FeedViewModel(
         _feedViewState.update {
             it.copy(
                 isLoading = false,
-                error = error
+                error = error.let(feedErrorCodeMappings.toPresentation())
             )
         }
     }

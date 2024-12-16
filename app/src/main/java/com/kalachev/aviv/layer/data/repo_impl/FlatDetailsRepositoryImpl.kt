@@ -32,7 +32,7 @@ class FlatDetailsRepositoryImpl(
             }
             Result.success(Unit)
         } else {
-            Result.failure(freshFlatDetailsResult.exceptionOrNull() ?: RemoteException("Failed to fetch assets"))
+            Result.failure(freshFlatDetailsResult.exceptionOrNull() ?: RemoteException(DEFAULT_REMOTE_ERROR_TEXT))
         }
     }
 
@@ -46,8 +46,12 @@ class FlatDetailsRepositoryImpl(
             Result.success(result.getOrNull()?.let(flatDetailsMappings.remoteToDomain()))
         } else {
             Result.failure(
-                result.exceptionOrNull() ?: RemoteException("Failed to fetch flat details")
+                result.exceptionOrNull() ?: RemoteException(DEFAULT_REMOTE_ERROR_TEXT)
             )
         }
+    }
+
+    companion object {
+        const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flat details"
     }
 }
