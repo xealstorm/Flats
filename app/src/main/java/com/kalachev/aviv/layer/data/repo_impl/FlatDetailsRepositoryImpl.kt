@@ -52,6 +52,6 @@ class FlatDetailsRepositoryImpl(
     }
 
     companion object {
-        const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flat details"
+        private const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flat details"
     }
 }

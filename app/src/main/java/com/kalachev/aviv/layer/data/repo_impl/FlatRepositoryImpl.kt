@@ -98,7 +98,7 @@ class FlatRepositoryImpl(
     }
 
     companion object {
-        const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flats"
-        const val DEFAULT_ILLEGAL_ARGUMENT_TEXT = "Incorrect format"
+        private const val DEFAULT_REMOTE_ERROR_TEXT = "Failed to fetch flats"
+        private const val DEFAULT_ILLEGAL_ARGUMENT_TEXT = "Incorrect format"
     }
 }
