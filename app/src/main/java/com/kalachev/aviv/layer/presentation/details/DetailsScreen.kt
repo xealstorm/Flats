@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
@@ -116,94 +117,73 @@ fun DetailsContent(
                 )
             }
 
-            if (details?.city != null) {
-                Text(
-                    text = details.city,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 3,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.city?.let {
+                if (it.isNotBlank()) {
+                    FlatDescriptionText(
+                        text = details.city,
+                    )
+                }
             }
 
-            if (details?.price != null) {
-                Text(
-                    text = details.price,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.price?.let {
+                if (it.isNotBlank()) {
+                    FlatDescriptionText(
+                        text = "${details.price} ${stringResource(R.string.default_currency)}",
+                    )
+                }
             }
 
-            if (details?.bedrooms != null) {
-                Text(
-                    text = details.bedrooms.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.rooms?.let {
+                if (it > 0) {
+                    FlatDescriptionText(
+                        text = "${details.rooms} ${
+                            pluralStringResource(
+                                id = R.plurals.rooms,
+                                count = details.rooms
+                            )
+                        }",
+                    )
+                }
             }
 
-            if (details?.rooms != null) {
-                Text(
-                    text = details.rooms.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+
+            details?.bedrooms?.let {
+                if (it > 0) {
+                    FlatDescriptionText(
+                        text = "${details.bedrooms} ${
+                            pluralStringResource(
+                                id = R.plurals.bedrooms,
+                                count = details.bedrooms
+                            )
+                        }",
+                    )
+                }
             }
 
-            if (details?.area != null) {
-                Text(
-                    text = details.area.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.area?.let {
+                if (it.isNotBlank()) {
+                    FlatDescriptionText(
+                        text = "${stringResource(R.string.area)}: ${details.area} ${stringResource(R.string.square_metres)}",
+                    )
+                }
             }
 
-            if (details?.professional != null) {
-                Text(
-                    text = details.professional,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.professional?.let {
+                if (it.isNotBlank()) {
+                    FlatDescriptionText(
+                        text = "${stringResource(R.string.professional)}: ${details.professional}",
+                    )
+                }
             }
 
-            if (details?.offerType != null) {
-                Text(
-                    text = details.offerType.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
+            details?.propertyType?.let {
+                if (it.isNotBlank()) {
+                    FlatDescriptionText(
+                        text = "${stringResource(R.string.property_type)}: ${details.propertyType}",
+                    )
+                }
             }
 
-            if (details?.propertyType != null) {
-                Text(
-                    text = details.propertyType,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
-                )
-            }
         }
         if (isLoading) {
             CircularProgressIndicator(
@@ -216,6 +196,21 @@ fun DetailsContent(
     }
 }
 
+@Composable
+fun FlatDescriptionText(
+    modifier: Modifier = Modifier,
+    text: String
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurface,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = Spacing.M, top = Spacing.M, end = Spacing.M)
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DetailsContentPreview() {
@@ -225,7 +220,7 @@ fun DetailsContentPreview() {
         price = "1500000.0",
         city = "Villers-sur-Mer",
         bedrooms = 3,
-        area = 550.0,
+        area = "550",
         professional = "GSL OWNERS",
         propertyType = "Maison - Villa",
         offerType = 1,

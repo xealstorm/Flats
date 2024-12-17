@@ -169,7 +169,7 @@ fun ItemView(feedItem: FeedItemModel, onClick: () -> Unit) {
             )
 
             Text(
-                text = feedItem.price,
+                text = "${feedItem.price} ${stringResource(R.string.default_currency)}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier

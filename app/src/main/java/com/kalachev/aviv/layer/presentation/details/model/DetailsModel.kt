@@ -9,7 +9,7 @@ data class DetailsModel(
     val bedrooms: Int,
     val rooms: Int,
     val city: String,
-    val area: Double,
+    val area: String,
     val imageUrl: String?,
     val price: String,
     val professional: String,

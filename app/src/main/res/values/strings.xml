@@ -4,4 +4,19 @@
     <string name="error_code_local">App error</string>
     <string name="error_code_unknown">Unknown error</string>
     <string name="cta_retry">Retry</string>
+
+
+    <string name="default_currency">€</string>
+    <plurals name="bedrooms">
+        <item quantity="one">bedroom</item>
+        <item quantity="other">bedrooms</item>
+    </plurals>
+    <plurals name="rooms">
+        <item quantity="one">room</item>
+        <item quantity="other">rooms</item>
+    </plurals>
+    <string name="area">Area</string>
+    <string name="square_metres">m²</string>
+    <string name="professional">Professional</string>
+    <string name="property_type">Property type</string>
 </resources>
