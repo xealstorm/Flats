@@ -8,9 +8,11 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -26,12 +28,13 @@ class LocalDataSourceTest {
     private lateinit var flatDetailsDao: FlatDetailsDao
     private lateinit var localDataSource: LocalDataSource
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         flatDao = mock(FlatDao::class.java)
         flatDetailsDao = mock(FlatDetailsDao::class.java)
         localDataSource =
-            LocalDataSource(mock(AppDatabase::class.java), flatDao, flatDetailsDao, Dispatchers.Unconfined)
+            LocalDataSource(mock(AppDatabase::class.java), flatDao, flatDetailsDao, UnconfinedTestDispatcher())
     }
 
     @Test
