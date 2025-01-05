@@ -10,6 +10,7 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
+import kotlinx.coroutines.CancellationException
 
 class RemoteDataSource(private val client: HttpClient) {
 
@@ -29,6 +30,9 @@ class RemoteDataSource(private val client: HttpClient) {
         } catch (e: ServerResponseException) {
             Result.failure(e)
         } catch (e: Exception) {
+            if (e is CancellationException) {
+                throw e
+            }
             Result.failure(e)
         }
 
@@ -49,6 +53,9 @@ class RemoteDataSource(private val client: HttpClient) {
         } catch (e: ServerResponseException) {
             Result.failure(e)
         } catch (e: Exception) {
+            if (e is CancellationException) {
+                throw e
+            }
             Result.failure(e)
         }
 
