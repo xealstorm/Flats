@@ -18,10 +18,27 @@ class RemoteDataSource(private val client: HttpClient) {
      * Performs a network call to request a list of all the flats.
      */
     suspend fun getAllFlats(): Result<RemoteFlatsResponse?> =
+        handleApiCall {
+            client.get(GET_FLATS_URL).body()
+        }
+
+    /**
+     * Performs a network call to request details of a flat of a particular id.
+     */
+    @SuppressLint("DefaultLocale")
+    suspend fun getFlatDetailsById(id: Long): Result<RemoteFlatDetails?> =
+        handleApiCall {
+            client.get(String.format(GET_FLAT_DETAILS_URL, id)).body()
+        }
+
+    /**
+     * A generic function to perform a network call and handle exceptions.
+     */
+    private suspend inline fun <T : HttpResponse, reified R> handleApiCall(crossinline apiCall: suspend () -> T): Result<R> =
         try {
-            val response: HttpResponse = client.get(GET_FLATS_URL)
+            val response: T = apiCall()
             if (response.status == HttpStatusCode.OK) {
-                Result.success(response.body<RemoteFlatsResponse?>())
+                Result.success(response.body<R>())
             } else {
                 Result.failure(IllegalArgumentException(DEFAULT_ERROR_TEXT))
             }
@@ -36,28 +53,6 @@ class RemoteDataSource(private val client: HttpClient) {
             Result.failure(e)
         }
 
-    /**
-     * Performs a network call to request details of a flat of a particular id.
-     */
-    @SuppressLint("DefaultLocale")
-    suspend fun getFlatDetailsById(id: Long): Result<RemoteFlatDetails?> =
-        try {
-            val response: HttpResponse = client.get(String.format(GET_FLAT_DETAILS_URL, id))
-            if (response.status == HttpStatusCode.OK) {
-                Result.success(response.body<RemoteFlatDetails?>())
-            } else {
-                Result.failure(IllegalArgumentException(DEFAULT_ERROR_TEXT))
-            }
-        } catch (e: ClientRequestException) {
-            Result.failure(e)
-        } catch (e: ServerResponseException) {
-            Result.failure(e)
-        } catch (e: Exception) {
-            if (e is CancellationException) {
-                throw e
-            }
-            Result.failure(e)
-        }
 
     companion object {
         const val GET_FLATS_URL = "/listings.json"
