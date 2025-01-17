@@ -1,6 +1,6 @@
 package com.kalachev.aviv.layer.presentation.details.model
 
-interface DetailsEvent {
+sealed interface DetailsEvent {
     data class ScreenOpened(val id: Long) : DetailsEvent
     data object Refresh : DetailsEvent
 }
